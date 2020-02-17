@@ -2,8 +2,9 @@
 
 {% block content %}
 
-<table class="table table-hover table-dark">
-    <thead>
+<!--ROOM DETAILS-->
+<table class="table table-hover">
+    <thead class="table-dark">
     <th colspan="2" class="text-center">Room details</th>
     </thead>
     <tbody>
@@ -22,25 +23,48 @@
     </tbody>
 </table>
 
+<br>
+<!--ADD RESERVATION-->
+<div><b>Add new reservation for this room.</b></div>
+<form method="post" action="{% url 'room_add_reservation' room.pk %}" class="form-group">
+{% csrf_token %}
+    <div class="col">
+        {% csrf_token %}
+        <input type="date" value="2020-02-17" name="date" class="form-control">
+        <input type="text" placeholder="Comment" name="comment" class="form-control">
+        <button type="submit" class="btn btn-primary">Add reservation</button>
+    </div>
+</form>
+<br>
 
-<table class="table table-hover table-light">
-    <thead>
-        <th colspan="2" class="text-center">Reservation table</th>
+
+<!--RESERVATION TABLE-->
+<table class="table table-hover">
+    <thead class="table-success">
+    <th colspan="2" class="text-center">Reservation table</th>
+    <tr>
+        <th>Reservation Date</th>
+        <th>Comment</th>
+    </tr>
     </thead>
 
-    <tbody>
+    <tbody class>
+    {% if reservations %}
+    {% for reservation in reservations %}
     <tr>
-        <td>Date</td>
-        <td>Availability</td>
-        <td>Reservation</td>
-    </tr>
-    <tr>
-        <td>Date</td>
-        <td>Availability</td>
-        <td>Reservation</td>
+        <td>{{reservation.date}}</td>
+        <td>{{reservation.comment}}</td>
+
     </tr>
 
+    {% endfor %}
+    {% else %}
+
+    <th colspan="2">Currently there is no reservation. Book conference room now!</th>
+
     </tbody>
+    {% endif %}
+
 </table>
 
 

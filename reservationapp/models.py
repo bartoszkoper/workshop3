@@ -13,9 +13,8 @@ class Sala(models.Model):
         response = self.reservations.filter(date=date).exists()
         return response
 
-
     def __str__(self):
-        return f"Obiekt<{self.name} {self.capacity} {self.projector}"
+        return f"Obiekt< {self.name} {self.capacity} {self.projector} >"
 
 
 class Reservation(models.Model):
@@ -24,4 +23,4 @@ class Reservation(models.Model):
     comment = models.TextField()
 
     def __str__(self):
-        return f"Dodano rezerwację dla: {self.sala} na dzien: {self.date} z komentarzem: {self.comment}"
+        return f"{self.sala} | {self.date} | {self.comment}"

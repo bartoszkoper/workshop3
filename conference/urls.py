@@ -22,6 +22,7 @@ urlpatterns = [
     path('', IndexView.as_view(), name='main'),
     path('admin/', admin.site.urls),
     path('room/new', RoomNewView.as_view(), name='room_new'),
+    path('room/addreservation/<int:id>', RoomAddReservationView.as_view(), name='room_add_reservation'),
     path('room/modify/<int:id>)', RoomModifyView.as_view(), name='room_modify'),
     path('room/delete/<int:id>', RoomDeleteView.as_view(), name='room_delete'),
     path('room/<int:id>', RoomView.as_view(), name='room_view'),

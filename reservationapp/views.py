@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.utils.datetime_safe import datetime
 from django.views import View
 
-from reservationapp.models import Sala
+from reservationapp.models import Sala, Reservation
 
 """Stwórz widoki sali. 
 Widoki powinny wyświetlać/odbierać formularze lub wyświetlać listę sal.
@@ -66,7 +66,8 @@ class RoomView(View):
 
     def get(self, request, id):
         self.response['room'] = Sala.objects.get(pk=id)
-        
+        self.response['reservations'] = Reservation.objects.filter(sala=id, date__gte=datetime.today())
+
         return render(request, 'room_view.html', context=self.response)
 
 
@@ -78,6 +79,41 @@ class RoomModifyView(View):
 
     def get(self, request):
         pass
+
+    def post(self, request):
+        pass
+
+
+class RoomAddReservationView(View):
+    """Rezerwacja sali."""
+
+    def get(self, request, id):
+        sala = Sala.objects.get(pk=id)
+        date = datetime.today()
+        comment = f"Auto-booking na dzień: {date}"
+        Reservation.objects.create(sala=sala, comment=comment, date=date)
+        messages.success(request, f"Zarezerwowano salkę {sala.name} na dziś!")
+
+        return redirect('/')
+
+    def post(self, request, id):
+        sala = Sala.objects.get(pk=id)
+        comment = request.POST.get('comment')
+        date = request.POST.get('date')
+
+        # Check if user wants to book conference in the past.
+        if date < str(datetime.today().date()):
+            messages.add_message(request, 100, f"You cannot book the conference room in the past.",
+                                 extra_tags='warning')
+        # Check if there is no reservation for selected day.
+        elif sala.is_unavailable(date) == False:
+            Reservation.objects.create(sala=sala, date=date, comment=comment)
+            messages.success(request, f"Reservation has been added.")
+        # Message that the date is already selected* (Information should be improved)
+        else:
+            messages.add_message(request, 100, f"This date is reserved already. Please select another day.",
+                                 extra_tags='danger')
+        return redirect('room_view', id=id)
 
 
 class RoomDeleteView(View):

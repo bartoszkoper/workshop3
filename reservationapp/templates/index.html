@@ -10,6 +10,7 @@
     <th>Status</th>
     <th>Edit</th>
     <th>Delete</th>
+    <th>Reservation</th>
     </thead>
     <tbody>
     <tr>
@@ -17,13 +18,17 @@
         </td>
     </tr>
 
-        {{response}}
     {% for each in rooms %}
 
     <tr>
         <td><a href="{% url 'room_view' each.room.pk %}">{{ each.room.name }}</a></td>
         <td>{{ each.status|yesno:"Unavailable,Available"}}</td>
-        <td><a href="/xxx/{{ xxx.id }}" class="btn btn-secondary">Edit</a></td>
+        {% if not each.status %}
+        <td><a href="{% url 'room_add_reservation' each.room.pk %}" class="btn btn-secondary">Book for today!</a></td>
+        {% else %}
+        <td></td>
+        {% endif %}
+        <td><a href="/xxx/{{ xxx.id }}" class="btn btn-secondary disabled">Edit</a></td>
         <td><a href="{% url 'room_delete' each.room.pk %}" class="btn btn-primary alert-danger">Delete</a></td>
     </tr>
 
