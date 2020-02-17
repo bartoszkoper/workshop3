@@ -8,12 +8,12 @@
 
     <th>Room Name</th>
     <th>Status</th>
-    <th>Edycja</th>
-    <th>Usuń</th>
+    <th>Edit</th>
+    <th>Delete</th>
     </thead>
     <tbody>
     <tr>
-        <td><a href="/xxxx" class="btn btn-primary">Dodaj nowy pokój</a>
+        <td><a href="{% url 'room_new' %}" class="btn btn-primary">Add new conference room</a>
         </td>
     </tr>
 
@@ -21,10 +21,10 @@
     {% for each in rooms %}
 
     <tr>
-        <td><a href="/movie-details/{{ movie.id }}/">{{ each.room.name }}</a></td>
-        <td>{{ each.status|yesno:"Niedostępna,Dostępna" }}</td>
-        <td><a href="/xxx/{{ xxx.id }}" class="btn btn-secondary">Edytuj</a></td>
-        <td><a href="xxx/{{ xxx.id }}" class="btn btn-primary alert-danger">Usuń</a></td>
+        <td><a href="{% url 'room_view' each.room.pk %}">{{ each.room.name }}</a></td>
+        <td>{{ each.status|yesno:"Unavailable,Available"}}</td>
+        <td><a href="/xxx/{{ xxx.id }}" class="btn btn-secondary">Edit</a></td>
+        <td><a href="{% url 'room_delete' each.room.pk %}" class="btn btn-primary alert-danger">Delete</a></td>
     </tr>
 
     </tbody>

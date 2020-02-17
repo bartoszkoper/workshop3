@@ -1,5 +1,6 @@
 from django.conf.urls import url
-from django.shortcuts import render
+from django.contrib import messages
+from django.shortcuts import render, redirect
 
 # Create your views here.
 from django.utils.datetime_safe import datetime
@@ -19,42 +20,58 @@ class IndexView(View):
     ich status danego dnia: zajęte lub wolne.
     Obok nazwy każdej sali chcę mieć link do modyfikacji danych sali oraz do jej usunięcia.
     """
+    response = dict()
+    response['title'] = "Conference Room Reservation Platform"
 
     def get(self, request):
         rooms = Sala.objects.all()
-        response = dict()
         json_builder = list()
 
+        # Build list with objects and statuses for each
         for room in rooms:
             json_builder.append({'room': room, 'status': room.is_unavailable(datetime.today())})
+        self.response['rooms'] = json_builder
 
-        response['rooms'] = json_builder
-
-        return render(request, 'index.html', context=response)
+        return render(request, 'index.html', context=self.response)
 
 
 class RoomNewView(View):
     """Jako użytkownik chcę móc dodać nową salę."""
+    response = dict()
+    response['title'] = 'Add new conference room.'
 
     def get(self, request):
-        response = dict()
-        response['msg'] = "ABCD"
-        return render(request, 'add_sala.html', context=response)
+        return render(request, 'add_sala.html', context=self.response)
+
+    def post(self, request):
+        name = request.POST.get('name')
+        capacity = request.POST.get('capacity')
+        projector = request.POST.get('projector') == 'on'
+
+        # New object has been built.
+        new_room = Sala.objects.create(name=name, capacity=capacity, projector=projector)
+        messages.success(request, f"New conference room has been added: {new_room.name}")
+
+        return render(request, 'add_sala.html', context=self.response)
 
 
 class RoomView(View):
-    """Jako użytkownik po kliknięciu w nazwę sali chcę zobaczyć wszystkie dane sali:
+    """TODO:Jako użytkownik po kliknięciu w nazwę sali chcę zobaczyć wszystkie dane sali:
     jej nazwę, pojemność oraz informację, czy ma rzutnik.
     Dodatkowo chcę zobaczyć listę dni, w które sala będzie zajęta.
     Nie chcę widzieć dni, które minęły.
     Chcę widzieć link, który pozwoli zarezerwować tę salę."""
+    response = dict()
+    response['title'] = f"Room details"
 
-    def get(self, request):
-        pass
+    def get(self, request, id):
+        self.response['room'] = Sala.objects.get(pk=id)
+        
+        return render(request, 'room_view.html', context=self.response)
 
 
 class RoomModifyView(View):
-    """Obok nazwy każdej sali chcę mieć link do
+    """TODO:Obok nazwy każdej sali chcę mieć link do
     modyfikacji danych sali oraz do jej usunięcia."""
     """Jako użytkownik po wejściu na stronę edycji sali chcę móc podać 
     dane sali (nazwa, pojemność, rzutnik, ew. inne dane)."""
@@ -67,11 +84,11 @@ class RoomDeleteView(View):
     """Obok nazwy każdej sali chcę mieć link do
     modyfikacji danych sali oraz do jej usunięcia."""
 
-    def get(self, request):
-        pass
-
-    def post(self, request):
-        pass
+    def get(self, request, id):
+        sala = Sala.objects.get(pk=id)
+        sala.delete()
+        messages.info(request, f'Conference room {sala.name} has been deleted.')
+        return redirect('main')
 
 
 class RoomSearchView(View):

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<table class="table table-hover table-dark">
+    <thead>
+    <th colspan="2" class="text-center">Room details</th>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Name</td>
+        <td>{{room.name}}</td>
+    </tr>
+    <tr>
+        <td>Capacity</td>
+        <td>{{room.capacity}}</td>
+    </tr>
+    <tr>
+        <td>Is projector available?</td>
+        <td>{{room.projector|yesno:"Yes,No"}}</td>
+    </tr>
+    </tbody>
+</table>
+
+
+<table class="table table-hover table-light">
+    <thead>
+        <th colspan="2" class="text-center">Reservation table</th>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>Date</td>
+        <td>Availability</td>
+        <td>Reservation</td>
+    </tr>
+    <tr>
+        <td>Date</td>
+        <td>Availability</td>
+        <td>Reservation</td>
+    </tr>
+
+    </tbody>
+</table>
+
+
+{% endblock %}
