@@ -11,15 +11,30 @@
 <body>
 
 
+<div class="container-fluid">
 
-<ul>
-    <li><a href="{% url 'main' %}">Main</a> </li>
-</ul>
+    <!--HEADER-->
+    <div class="row">
+        <h1 class="jumbotron col-12">System zarządzania rezerwacjami sal</h1>
+    </div>
 
-{{msg}}
+    <div class="row container-fluid">
+        <!--LEFT MENU-->
+        <div class="col">
+            <ul>
+                <li><a href="{% url 'main' %}">Main</a></li>
+            </ul>
+        </div>
 
-{% block content %}
-{% endblock %}
+        <!--CONTENT-->
+        <div class="col-10">
+            {% block content %}
+            {% endblock %}
+            {{msg}}
+        </div>
 
+    </div>
+</div>
+    <!--Footer-->
 </body>
 </html>

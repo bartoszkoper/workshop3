@@ -77,9 +77,9 @@ WSGI_APPLICATION = 'conference.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'warsztat3',
+        'NAME': 'warsztat3', #na linuxie i na windowsie taka sama nazwa bazy danych
         'USER': 'postgres',
-        'PASSWORD': 'coderslab',
+        'PASSWORD': 'devechobk',
         'HOST': 'localhost',
     }
 }

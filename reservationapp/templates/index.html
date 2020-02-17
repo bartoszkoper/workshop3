@@ -3,8 +3,33 @@
 
 {% block content %}
 
-{% for sala in salki %}
-    {{sala}}
-{% endfor %}
+<table class="table col-12">
+    <thead class="table-dark col-12">
+
+    <th>Room Name</th>
+    <th>Status</th>
+    <th>Edycja</th>
+    <th>Usuń</th>
+    </thead>
+    <tbody>
+    <tr>
+        <td><a href="/xxxx" class="btn btn-primary">Dodaj nowy pokój</a>
+        </td>
+    </tr>
+
+        {{response}}
+    {% for each in rooms %}
+
+    <tr>
+        <td><a href="/movie-details/{{ movie.id }}/">{{ each.room.name }}</a></td>
+        <td>{{ each.status|yesno:"Niedostępna,Dostępna" }}</td>
+        <td><a href="/xxx/{{ xxx.id }}" class="btn btn-secondary">Edytuj</a></td>
+        <td><a href="xxx/{{ xxx.id }}" class="btn btn-primary alert-danger">Usuń</a></td>
+    </tr>
+
+    </tbody>
+    {% endfor %}
+</table>
+
 
 {% endblock %}

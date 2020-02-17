@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 
 
@@ -9,12 +10,18 @@ class Sala(models.Model):
     projector = models.BooleanField(default=True)
 
     def is_unavailable(self, date):
-        return self.reservations.filter(date=date).exists()
+        response = self.reservations.filter(date=date).exists()
+        return response
+
 
     def __str__(self):
         return f"Obiekt<{self.name} {self.capacity} {self.projector}"
+
 
 class Reservation(models.Model):
     sala = models.ForeignKey(Sala, on_delete=models.CASCADE, related_name='reservations')
     date = models.DateField()
     comment = models.TextField()
+
+    def __str__(self):
+        return f"Dodano rezerwację dla: {self.sala} na dzien: {self.date} z komentarzem: {self.comment}"
