@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+    <label>Name: <input name="name" type="text" placeholder="name"></label>
+    <label>Capacity: <input name="capacity" type="text" placeholder="capacity"></label>
+    <label>Is projector available?<input name="projector" type="checkbox"></label>
+
+</form>
+
+{% endblock %}

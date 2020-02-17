@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+</head>
+<body>
+
+
+
+<ul>
+    <li><a href="{% url 'main' %}">Main</a> </li>
+</ul>
+
+{{msg}}
+
+{% block content %}
+{% endblock %}
+
+</body>
+</html>
