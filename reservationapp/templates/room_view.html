@@ -10,7 +10,7 @@
     <tbody>
     <tr>
         <td>Name</td>
-        <td>{{room.name}}</td>
+        <td>{% if edit %} {{'<input name="name">'}} {%else%} {{room.name}} {%endif%}</td>
     </tr>
     <tr>
         <td>Capacity</td>

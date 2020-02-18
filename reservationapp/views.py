@@ -1,5 +1,6 @@
 from django.conf.urls import url
 from django.contrib import messages
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 # Create your views here.
@@ -67,18 +68,21 @@ class RoomView(View):
     def get(self, request, id):
         self.response['room'] = Sala.objects.get(pk=id)
         self.response['reservations'] = Reservation.objects.filter(sala=id, date__gte=datetime.today())
-
+        print(request)
         return render(request, 'room_view.html', context=self.response)
 
 
-class RoomModifyView(View):
+class RoomModifyView(View): #A może do edycji przydałoby się dziedziczenie, ale z flagą edit=True ?
     """TODO:Obok nazwy każdej sali chcę mieć link do
     modyfikacji danych sali oraz do jej usunięcia."""
     """Jako użytkownik po wejściu na stronę edycji sali chcę móc podać 
     dane sali (nazwa, pojemność, rzutnik, ew. inne dane)."""
+    response = dict()
+    def get(self, request, id):
+        room = RoomView.get(self=self,request=request,id=id)
+        self.response['edit'] = True
+        return room
 
-    def get(self, request):
-        pass
 
     def post(self, request):
         pass
