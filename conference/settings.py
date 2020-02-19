@@ -79,7 +79,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'warsztat3', #na linuxie i na windowsie taka sama nazwa bazy danych
         'USER': 'postgres',
-        'PASSWORD': 'devechobk',
+        'PASSWORD': 'coderslab',
         'HOST': 'localhost',
     }
 }
