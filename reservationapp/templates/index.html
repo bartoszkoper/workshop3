@@ -28,7 +28,7 @@
         {% else %}
         <td></td>
         {% endif %}
-        <td><a href="/xxx/{{ xxx.id }}" class="btn btn-secondary disabled">Edit</a></td>
+        <td><a href="{% url 'room_modify' each.room.pk %}" class="btn btn-secondary">Edit</a></td>
         <td><a href="{% url 'room_delete' each.room.pk %}" class="btn btn-primary alert-danger">Delete</a></td>
     </tr>
 

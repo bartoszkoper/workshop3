@@ -1,25 +1,54 @@
 {% extends 'base.html' %}
 
+
 {% block content %}
 
+
 <!--ROOM DETAILS-->
-<table class="table table-hover">
+<table class="table table-hover" xmlns:room.projector>
     <thead class="table-dark">
     <th colspan="2" class="text-center">Room details</th>
     </thead>
     <tbody>
-    <tr>
-        <td>Name</td>
-        <td>{% if edit %} {{'<input name="name">'}} {%else%} {{room.name}} {%endif%}</td>
-    </tr>
-    <tr>
-        <td>Capacity</td>
-        <td>{{room.capacity}}</td>
-    </tr>
-    <tr>
-        <td>Is projector available?</td>
-        <td>{{room.projector|yesno:"Yes,No"}}</td>
-    </tr>
+    <form method="post" action="{% url 'room_modify' room.pk %}">
+        {% csrf_token %}
+        <tr>
+            <td>Name</td>
+            <!-- Tutaj się zastanawiam jak stworzyć macro,  do tworzenia Pól. Nie chciało mi zadziałać, wyrzucało blok o endmacro  oraz czy zarejestrowałem?        -->
+            <td>{% if edit %} <input name="name" placeholder="{{room.name}}" value="{{room.name}}" class="form-control"> {%else%}
+                {{room.name}}
+                {%endif%}
+            </td>
+        </tr>
+        <tr>
+            <td>Capacity</td>
+            <td>{% if edit %} <input name="capacity" type="number" placeholder="{{room.capacity}}" value="{{room.capacity}}" class="form-control"> {%else%}
+                {{room.capacity}}{%endif%}
+            </td>
+        </tr>
+        <tr>
+            <td>Is projector available?</td>
+            <td>{% if edit %}
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="cb_is_projector" name="projector" {{
+                           room.projector|yesno:"checked," }}>
+                    <label class="custom-control-label" for="cb_is_projector"></label>
+                </div>
+                {%else%}
+
+                {{room.projector|yesno:"Yes,No"}}
+
+                {%endif%}
+            </td>
+        </tr>
+       {% if edit %} <tr>
+            <td colspan="2" class="text-center">
+                <button type="submit" class="btn btn-primary">Save</button>
+
+            </td>
+        </tr>
+        {% endif %}
+    </form>
     </tbody>
 </table>
 
@@ -27,10 +56,10 @@
 <!--ADD RESERVATION-->
 <div><b>Add new reservation for this room.</b></div>
 <form method="post" action="{% url 'room_add_reservation' room.pk %}" class="form-group">
-{% csrf_token %}
+    {% csrf_token %}
     <div class="col">
         {% csrf_token %}
-        <input type="date" value="2020-02-17" name="date" class="form-control">
+        <input type="date" value="{% now 'Y-m-d' %}" name="date" class="form-control">
         <input type="text" placeholder="Comment" name="comment" class="form-control">
         <button type="submit" class="btn btn-primary">Add reservation</button>
     </div>

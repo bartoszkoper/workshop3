@@ -25,8 +25,8 @@ urlpatterns = [
     path('room/addreservation/<int:id>', RoomAddReservationView.as_view(), name='room_add_reservation'),
     path('room/modify/<int:id>', RoomModifyView.as_view(), name='room_modify'),
     path('room/delete/<int:id>', RoomDeleteView.as_view(), name='room_delete'),
+    path('room/search', RoomSearchView.as_view(), name='search'),
     path('room/<int:id>', RoomView.as_view(), name='room_view'),
-
 
 ]
 

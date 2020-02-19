@@ -11,7 +11,6 @@
 <body>
 
 
-
 <div class="container-fluid">
 
     <!--HEADER-->
@@ -21,20 +20,21 @@
 
     <div class="row container-fluid">
         <!--LEFT MENU-->
+
         <div class="col">
+            <h3>MENU</h3>
             <ul>
                 <li><a href="{% url 'main' %}">Conference rooms for today</a></li>
                 <li><a href="{% url 'room_new' %}">Add new Conference Room</a></li>
-                <li><a href="{% url 'main' %}">Main</a></li>
-                <li><a href="{% url 'main' %}">Main</a></li>
             </ul>
+            {% include  'search_component.html' %}
         </div>
-
-        <!--CONTENT-->
         <div class="col-10">
             {% for message in messages %}
-                <p class="alert alert-{{message.tags}}">{{message}}</p>
+            <p class="alert alert-{{message.tags}}">{{message}}</p>
             {% endfor %}
+        <!--CONTENT-->
+
 
             {% block content %}
             {% endblock %}
@@ -42,7 +42,7 @@
         </div>
 
     </div>
-</div>
-    <!--Footer-->
+
+<!--Footer-->
 </body>
 </html>

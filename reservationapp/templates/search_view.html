@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<table class="table col-12">
+    <thead class="table-dark col-12">
+
+    <th>Room Name</th>
+    <th>Date</th>
+    <th>Book today</th>
+    <th>Capacity</th>
+    <th>Projector</th>
+    </thead>
+    <tbody>
+    {% now 'Y-m-d' %}
+    {% for reservation in reservations %}
+
+    <tr>
+        <td><a href="{% url 'room_view' reservation.sala.pk %}">{{ reservation.sala.name }}</a></td>
+        <!--        <td>{{ reservation.sala.is_unavailable|yesno:"Available,Unavailable"}}</td>-->
+        <td>{{reservation.date|date:'Y-m-d' }}</td>
+
+
+        <!-- I cannot resolve below issue to compare  now|date with the date from database..       -->
+        {% if reservation.date|date:'Y-m-d' == now|date:'Y-m-d' %}
+            <td><a href="{% url 'room_add_reservation' reservation.sala.pk %}" class="btn btn-secondary">Book for today!</a>
+            </td>
+        {% else %}
+            <td>Already Booked</td>
+        {% endif %}
+
+        <td>{{reservation.capacity}}</td>
+        <td>{{reservation.sala.projector|yesno:"Available,Unavailable"}}</td>
+    </tr>
+
+    </tbody>
+    {% endfor %}
+
+</table>
+
+
+{% endblock %}

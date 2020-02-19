@@ -1,0 +1,49 @@
+
+<h3>Search  component </h3>
+            <form method="post" action="{% url 'search' %}">
+                {% csrf_token %}
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Room name</span>
+                    </div>
+                    <input type="text" name="name" class="form-control" aria-label="Search room name"
+                           aria-describedby="inputGroup-sizing-sm">
+                </div>
+
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Room date</span>
+                    </div>
+                    <input type="date" name="date" class="form-control" aria-label="Small"
+                           aria-describedby="inputGroup-sizing-sm" value="{% now 'Y-m-d' %}">
+                </div>
+
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Room capacity</span>
+                    </div>
+                    <input type="number" name="capacity" class="form-control" aria-label="Small"
+                           aria-describedby="inputGroup-sizing-sm">
+                </div>
+
+                <div class="input-group input-group-sm mb-3 mr-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-sm">Projector availability</span>
+                    </div>
+                    <div class="custom-control custom-switch ml-2">
+
+                        <input type="checkbox" class="custom-control-input" id="cb_is_projector"
+                               name="projector" value="True" checked>
+                        <label class="custom-control-label" for="cb_is_projector">Available</label>
+                    </div>
+                    <div class="custom-control custom-switch ml-2">
+                        <input type="checkbox" class="custom-control-input" id="cb_is_projector_both"
+                               name="projector" value="False" checked>
+                        <label class="custom-control-label" for="cb_is_projector_both">Unavailable</label>
+                    </div>
+
+                </div>
+                    <div class="ml-2">
+                        <button type="submit" class="btn btn-secondary">Search</button>
+                    </div>
+            </form>
