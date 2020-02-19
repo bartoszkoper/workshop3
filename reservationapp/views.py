@@ -12,6 +12,7 @@ from reservationapp.models import Sala, Reservation
 class IndexView(View):
     """Jako użytkownik chcę po wejściu na stronę główną widzieć wszystkie sale konferencyjne i ich status danego dnia: zajęte lub wolne.
     Obok nazwy każdej sali chcę mieć link do modyfikacji danych sali oraz do jej usunięcia."""
+
     response = dict()
     response['title'] = "Conference Room Reservation Platform"
 
@@ -29,6 +30,7 @@ class IndexView(View):
 
 class RoomNewView(View):
     """Jako użytkownik chcę móc dodać nową salę."""
+    
     response = dict()
     response['title'] = 'Add new conference room.'
 
