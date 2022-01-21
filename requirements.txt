@@ -1,6 +1,6 @@
 Django==2.2.10
 Faker==4.0.0
-ipython==7.11.1
+ipython==7.16.3
 ipython-genutils==0.2.0
 jedi==0.15.2
 parso==0.5.2
